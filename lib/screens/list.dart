@@ -15,6 +15,7 @@ class _ListState extends State<List> {
 
 
   TextEditingController bank = new TextEditingController();
+  TextEditingController AccountNum = new TextEditingController();
   String _errorText;
 AppState appState;
   Bank _dropdownValue;
@@ -57,14 +58,8 @@ AppState appState;
                             showSheet();
                           },
                           autofocus: true,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value){
-                            if( !(value.length > 5 && value.isNotEmpty)){
-                              return "password should contain more than 5 characters";
-                            }
-//                  bank  = value;
-                            return null;
-                          },
+//                          keyboardType: TextInputType.emailAddress,
+
                           decoration: InputDecoration(
 
                               border: InputBorder.none, hintText: "Choose your bank", contentPadding: const EdgeInsets.all(20.0)),
@@ -83,6 +78,79 @@ AppState appState;
               ),
             ),
 
+            SizedBox(height: 20,),
+            Center(
+              child: Container(
+
+                width: 370,
+                margin: EdgeInsets.only(top: 4, left: 8, right: 8),
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(7)
+//
+                ),
+                child:      Container(
+                  width: 300,
+                  child: TextFormField(
+                    controller: AccountNum,
+                    onTap: (){
+
+                    },
+                    autofocus: true,
+                    keyboardType: TextInputType.number,
+                    validator: (value){
+                      if( !(value.length > 5 && value.isNotEmpty)){
+                        return "Account should contain more than 5 characters";
+                      }
+//                  bank  = value;
+                      return null;
+                    },
+                    decoration: InputDecoration(
+
+                        border: InputBorder.none, hintText: "Account num", contentPadding: const EdgeInsets.all(20.0)),
+                  ),
+                ),
+
+
+              ),
+            ),
+
+            SizedBox(height: 20,),
+            Center(
+              child: Container(
+
+                width: 370,
+                margin: EdgeInsets.only(top: 4, left: 8, right: 8),
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(7)
+//
+                ),
+                child:      Container(
+                  width: 300,
+                  child: TextFormField(
+                    controller: AccountNum,
+                    onTap: (){
+
+                    },
+                    autofocus: true,
+                    keyboardType: TextInputType.number,
+                    validator: (value){
+                      if( !(value.length > 5 && value.isNotEmpty)){
+                        return "Account should contain more than 5 characters";
+                      }
+//                  bank  = value;
+                      return null;
+                    },
+                    decoration: InputDecoration(
+
+                        border: InputBorder.none, hintText: "Recipient name", contentPadding: const EdgeInsets.all(20.0)),
+                  ),
+                ),
+
+
+              ),
+            ),
           ],
         ),
       ),
