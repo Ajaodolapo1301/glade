@@ -157,30 +157,6 @@ AppState appState;
     );
   }
 
-//  Widget _buildBank() {
-//    return FormField(
-//      builder: (FormFieldState state) {
-//        return DropdownButtonHideUnderline(
-//          child: new Column(
-//            crossAxisAlignment: CrossAxisAlignment.stretch,
-//            children: <Widget>[
-//              new InputDecorator(
-//                decoration: InputDecoration(
-//                  filled: false,
-//                  hintText: 'Choose Bank',
-//                  labelText:
-//                  _dropdownValue == null ? 'Select bank' : "bank",
-//                  errorText: _errorText,
-//                ),
-//                isEmpty: _dropdownValue == null,
-//                child: ,
-//              ),
-//            ],
-//          ),
-//        );
-//      },
-//    );
-//  }
 
 
   showSheet(){
