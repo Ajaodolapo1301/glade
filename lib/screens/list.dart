@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/model/bank.dart';
 import 'package:glade/view_models/AppState.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,9 @@ AppState appState;
     appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios, color: Colors.black,), onPressed: (){
+          Navigator.pop(context);
+        },),
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
@@ -32,6 +36,7 @@ AppState appState;
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 5,),
             Text("GET BANKS", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),
             SizedBox(height: 20,),
             Center(
@@ -149,6 +154,26 @@ AppState appState;
                 ),
 
 
+              ),
+            ),
+
+
+
+Spacer(),
+
+            InkWell(
+              onTap: (){
+                Navigator.push(context, FadeRoute(page: List()));
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 50, right: 20, left: 20),
+                width: double.infinity,
+                height: 60,
+                decoration: BoxDecoration(
+                    color: Color(0xff5CA2F2),
+                    borderRadius: BorderRadius.circular(13)
+                ),
+                child: Center(child: Text("Next", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: 20, ),)),
               ),
             ),
           ],

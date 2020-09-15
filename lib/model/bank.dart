@@ -1,7 +1,7 @@
 
 
 class Bank{
-  String id;
+  String bankcode;
   String name;
-  Bank({this.id, this.name});
+  Bank({this.bankcode, this.name});
 }

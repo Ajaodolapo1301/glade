@@ -8,18 +8,18 @@ class AppState with ChangeNotifier{
   List<Bank> listOfBnk = [
     Bank(
 
-      id: "1",
+        bankcode: "1",
       name: "Gtbank"
     ),
 
     Bank(
 
-        id: "2",
+        bankcode: "2",
         name: "Skybank"
     ),
     Bank(
 
-        id: "3",
+        bankcode: "3",
         name: "First name"
     ),
   ];
