@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glade/animation/fadeRoute.dart';
+import 'package:glade/constant.dart';
 import 'package:glade/screens/list.dart';
 
 
@@ -69,7 +70,7 @@ class _HomeState extends State<Home> {
                   width: double.infinity,
                   height: 60,
                   decoration: BoxDecoration(
-                      color: Color(0xff5CA2F2),
+                      color:kprimary,
                       borderRadius: BorderRadius.circular(13)
                   ),
                   child: Center(child: Text("Next", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: 20, ),)),
