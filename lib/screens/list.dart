@@ -18,6 +18,8 @@ class _ListState extends State<List> {
 
   TextEditingController bank = new TextEditingController();
   TextEditingController AccountNum = new TextEditingController();
+
+  TextEditingController AccountName = new TextEditingController();
   String _errorText;
 AppState appState;
   Bank _dropdownValue;
@@ -135,7 +137,7 @@ AppState appState;
                 child:      Container(
                   width: 300,
                   child: TextFormField(
-                    controller: AccountNum,
+                    controller: AccountName,
                     onTap: (){
 
                     },
