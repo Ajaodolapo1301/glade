@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
 import 'package:glade/model/bank.dart';
+import 'package:glade/screens/lastPage.dart';
 
 import 'package:glade/utils/CustomUtils.dart';
 import 'package:glade/view_models/AppState.dart';
@@ -26,7 +27,7 @@ var name;
 BankState bankState;
   TextEditingController bank = new TextEditingController();
   TextEditingController accountNum = new TextEditingController();
-
+final _formkey = GlobalKey<FormState>();
   TextEditingController accountName = new TextEditingController();
 AutoCompleteTextField searchTextField;
 GlobalKey<AutoCompleteTextFieldState<Map>> key = new GlobalKey();
@@ -61,137 +62,147 @@ void showPdDialog() async {
           children: <Widget>[
 
 
-            SizedBox(height: 20,),
-            Center(
-              child: Container(
+            Form(
+              key: _formkey,
+              child: Column(
+                children: <Widget>[
 
-                width: 370,
-          margin: EdgeInsets.only(top: 4, left: 8, right: 8),
-                decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(7)
+
+
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Container(
+
+                      width: 370,
+                      margin: EdgeInsets.only(top: 4, left: 8, right: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(7)
 //
-                    ),
-                child:Container(
-                  width: 300,
-                  child: Row(
-
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
+                      ),
+                      child:Container(
                         width: 300,
-                        child: TextFormField(
-                          controller: bank,
-                          onTap: (){
-                            showSheet();
-                          },
-                          autofocus: true,
+                        child: Row(
+
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              width: 300,
+                              child: TextFormField(
+                                controller: bank,
+                                onTap: (){
+                                  showSheet();
+                                },
+                                autofocus: true,
 //                          keyboardType: TextInputType.emailAddress,
 
-                          decoration: InputDecoration(
+                                decoration: InputDecoration(
 
-                              border: InputBorder.none, hintText: "Choose your bank", contentPadding: const EdgeInsets.all(20.0)),
+                                    border: InputBorder.none, hintText: "Choose your bank", contentPadding: const EdgeInsets.all(20.0)),
+                              ),
+                            ),
+                            IconButton(icon: Icon(Icons.keyboard_arrow_down), onPressed: (){
+
+                              showSheet();
+                            },)
+
+                          ],
                         ),
                       ),
-                      IconButton(icon: Icon(Icons.keyboard_arrow_down), onPressed: (){
 
-                        showSheet();
-                      },)
 
-                    ],
+                    ),
                   ),
-                ),
 
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Container(
 
-              ),
-            ),
-
-            SizedBox(height: 20,),
-            Center(
-              child: Container(
-
-                width: 370,
-                margin: EdgeInsets.only(top: 4, left: 8, right: 8),
-                decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(7)
+                      width: 370,
+                      margin: EdgeInsets.only(top: 4, left: 8, right: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(7)
 //
-                ),
-                child:      Container(
-                  width: 300,
-                  child: TextFormField(
-                    controller: accountNum,
-                    onTap: (){
+                      ),
+                      child:      Container(
+                        width: 300,
+                        child: TextFormField(
+                          controller: accountNum,
+                          onTap: (){
 
-                    },
+                          },
 
-                    onChanged: (v){
+                          onChanged: (v){
 
-                      if(v.length < 10){
-                        accountName.text = "";
-                      }else if(v.length == 10 && bank.text.isNotEmpty){
-                        getName();
-                      }
-                    },
+                            if(v.length < 10){
+                              accountName.text = "";
+                            }else if(v.length == 10 && bank.text.isNotEmpty){
+                              getName();
+                            }
+                          },
 
-                    autofocus: true,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      WhitelistingTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(10)
-                    ],
-                    validator: (e) {
-                      if (e.length < 11) {
-                        return "enter a valid Account number";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
+                          autofocus: true,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            WhitelistingTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(10)
+                          ],
+                          validator: (e) {
+                            if (e.length < 1) {
+                              return "enter a valid Account number";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
 
-                        border: InputBorder.none, hintText: "Account num", contentPadding: const EdgeInsets.all(20.0)),
+                              border: InputBorder.none, hintText: "Account num", contentPadding: const EdgeInsets.all(20.0)),
+                        ),
+                      ),
+
+
+                    ),
                   ),
-                ),
 
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Container(
 
-              ),
-            ),
-
-            SizedBox(height: 20,),
-            Center(
-              child: Container(
-
-                width: 370,
-                margin: EdgeInsets.only(top: 4, left: 8, right: 8),
-                decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(7)
+                      width: 370,
+                      margin: EdgeInsets.only(top: 4, left: 8, right: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(7)
 //
-                ),
-                child:      Container(
-                  width: 300,
-                  child: TextFormField(
+                      ),
+                      child:      Container(
+                        width: 300,
+                        child: TextFormField(
 
-                    readOnly: true,
-                    controller: accountName,
-                    onTap: (){
+                          readOnly: true,
+                          controller: accountName,
+                          onTap: (){
 
-                    },
-                    autofocus: true,
-                    keyboardType: TextInputType.number,
-                    validator: (value){
-                      if( !(value.length > 5 && value.isNotEmpty) ){
-                        return "Account should contain more than 5 characters";
-                      }
+                          },
+                          autofocus: true,
+                          keyboardType: TextInputType.number,
+                          validator: (value){
+                            if( !(value.length > 5 && value.isNotEmpty) ){
+                              return "Account should contain more than 5 characters";
+                            }
 //                  bank  = value;
-                      return null;
-                    },
-                    decoration: InputDecoration(
+                            return null;
+                          },
+                          decoration: InputDecoration(
 
-                        border: InputBorder.none, hintText: "Recipient name", contentPadding: const EdgeInsets.all(20.0)),
+                              border: InputBorder.none, hintText: "Recipient name", contentPadding: const EdgeInsets.all(20.0)),
+                        ),
+                      ),
+
+
+                    ),
                   ),
-                ),
-
-
+                ],
               ),
             ),
 
@@ -201,7 +212,9 @@ Spacer(),
 
             InkWell(
               onTap: (){
-                Navigator.push(context, FadeRoute(page: List()));
+                if(_formkey.currentState.validate()){
+                  Navigator.push(context, FadeRoute(page: Last()));
+                }
               },
               child: Container(
                 margin: EdgeInsets.only(bottom: 50, right: 20, left: 20),
@@ -221,11 +234,11 @@ Spacer(),
   }
 
 
-//
+
   getName() async{
 
     showPdDialog();
-    print("called");
+
     result = await bankState.verifyAccount(accountnum: accountNum.text, bankCode: code );
     pd.hide();
       if(result["error"] == false){
