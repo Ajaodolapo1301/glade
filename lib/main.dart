@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:glade/screens/splashPage.dart';
 import 'package:glade/view_models/AppState.dart';
+import 'package:glade/view_models/bank.dart';
 import 'package:hive/hive.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -27,10 +28,12 @@ Future <void> main() async {
       providers: [
 
         ChangeNotifierProvider(create: (_)=>AppState()),
-
+        ChangeNotifierProvider(create: (_)=>BankState()),
       ],
       child: MyApp()));
 }
+
+
 class MyApp extends StatelessWidget {
 //  final Driver driver;
 

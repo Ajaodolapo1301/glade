@@ -1,7 +1,10 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
 import 'package:glade/screens/list.dart';
+import 'package:glade/view_models/bank.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -11,17 +14,18 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home>  with AfterLayoutMixin<Home>{
   var bvn;
-
+  BankState bankState;
   @override
   Widget build(BuildContext context) {
+    bankState = Provider.of<BankState>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-      ),
-      body: Container(
+//      appBar: AppBar(
+//        backgroundColor: Colors.white,
+//        elevation: 0.0,
+//      ),
+      body: Container(margin: EdgeInsets.only(top: 60),
         height: MediaQuery.of(context).size.height,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -81,5 +85,10 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+        bankState.getListOfBanks();
   }
 }

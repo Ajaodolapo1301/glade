@@ -3,6 +3,7 @@ import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
 import 'package:glade/model/bank.dart';
 import 'package:glade/view_models/AppState.dart';
+import 'package:glade/view_models/bank.dart';
 import 'package:provider/provider.dart';
 
 
@@ -15,7 +16,7 @@ class List extends StatefulWidget {
 
 class _ListState extends State<List> {
 
-
+BankState bankState;
   TextEditingController bank = new TextEditingController();
   TextEditingController AccountNum = new TextEditingController();
 
@@ -25,6 +26,8 @@ AppState appState;
   Bank _dropdownValue;
   @override
   Widget build(BuildContext context) {
+    bankState = Provider.of<BankState>(context);
+
     appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
@@ -206,13 +209,14 @@ Spacer(),
                         color: Colors.white,
                         borderRadius: BorderRadius.only(topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0))
                     ),
-                  child: ListView.builder(
-                    itemCount: appState.listOfBnk.length,
+                  child:
+
+                  ListView.builder(
+                    itemCount: bankState.bank.length,
                       itemBuilder: (BuildContext context, int index){
                     return Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: bankWidget(appState.listOfBnk[index].name)
-                    );
+                      child: bankWidget(bankState.bank.values.elementAt(index)));
 
                   }),
                 );
@@ -233,7 +237,11 @@ Spacer(),
           Navigator.pop(context);
         },
 
-        child: Text(name));
+        child: Card(
+        child: ListTile(
+        title: Text(name)
+    ),
+    ));
   }
 
 

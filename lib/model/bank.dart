@@ -1,7 +1,19 @@
 
 
 class Bank{
-  String bankcode;
+  String bankCode;
   String name;
-  Bank({this.bankcode, this.name});
+  Bank({this.name, this.bankCode});
+  @override
+
+
+  factory Bank.fromJson(Map<String, dynamic> parsedJson) {
+    return Bank(
+        bankCode: parsedJson["id"] as String,
+        name: parsedJson["name"] as String,
+
+    );
+  }
+
+
 }
