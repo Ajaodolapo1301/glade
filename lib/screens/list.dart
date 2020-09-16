@@ -1,7 +1,9 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
+import 'package:glade/model/bank.dart';
 
 import 'package:glade/utils/CustomUtils.dart';
 import 'package:glade/view_models/AppState.dart';
@@ -19,22 +21,23 @@ class List extends StatefulWidget {
 
 class _ListState extends State<List> {
 var code;
+var bankName;
 BankState bankState;
   TextEditingController bank = new TextEditingController();
   TextEditingController accountNum = new TextEditingController();
 
   TextEditingController accountName = new TextEditingController();
-
+AutoCompleteTextField searchTextField;
+GlobalKey<AutoCompleteTextFieldState<Bank>> key = new GlobalKey();
 AppState appState;
 var result;
 int charLength = 0;
 ProgressDialog pd;
-
+bool complete = false;
 void showPdDialog() async {
   pd = await CustomUtils.showProgressDialog(
       context, "Processing...Please wait!");
 }
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +125,7 @@ void showPdDialog() async {
                     },
 
                     onChanged: (v){
-                      print(v);
+
                       if(v.length < 10){
                         accountName.text = "";
                       }else if(v.length == 10 && bank.text.isNotEmpty){
@@ -236,7 +239,23 @@ Spacer(),
 
 
 
-
+  Widget row(Bank bank) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          bank.name,
+          style: TextStyle(fontSize: 16.0),
+        ),
+        SizedBox(
+          width: 10.0,
+        ),
+//        Text(
+//          bank.code,
+//        ),
+      ],
+    );
+  }
 
 
   showSheet(){
@@ -258,16 +277,76 @@ Spacer(),
                         color: Colors.white,
                         borderRadius: BorderRadius.only(topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0))
                     ),
-                  child:
+                  child: Column(
+                    children: <Widget>[
 
-                  ListView.builder(
-                    itemCount: bankState.bank.length,
-                      itemBuilder: (BuildContext context, int index){
-                    return Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: bankWidget(name: bankState.bank.values.elementAt(index), codehh: bankState.bank.keys.elementAt(index)));
 
-                  }),
+//                      Container(
+//                        margin: EdgeInsets.all(10),
+//                        width: 300,
+//                        height: 70,
+//                        color: Colors.grey,
+//                        child: Container(
+//                          margin: EdgeInsets.only(left: 20, right: 20),
+//                          child:
+//
+//                          searchTextField = AutoCompleteTextField<Bank>(
+//                            key: key,
+//                            clearOnSubmit: false,
+//                            suggestions:  bankState.bank
+//
+//                            style: TextStyle(color: Colors.black, fontSize: 16.0),
+//                            decoration: InputDecoration(
+//
+//                              enabledBorder: UnderlineInputBorder(
+//
+//                                borderSide: BorderSide(
+//                                    color: Color(0xffF2F2F2)
+//                                ),
+//                              ),
+//                              contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 20.0),
+//                              hintText: "Bank Name",
+//                              hintStyle: TextStyle(color: Colors.black, fontSize: 15,  ),
+//                            ),
+//                            itemFilter: (item, query) {
+//                              return item.name
+//                                  .toLowerCase()
+//                                  .startsWith(query.toLowerCase());
+//                            },
+//                            itemSorter: (a, b) {
+//                              return a.name.compareTo(b.name);
+//                            },
+//                            itemSubmitted: (item) {
+//                              setState(() {
+//                                searchTextField.textField.controller.text = item.name;
+//                              });
+//                            },
+//                            itemBuilder: (context, item) {
+//                              bankName = item.name;
+//                              print(bankName);
+//                              // ui for the autocomplete row
+//                              return row(item);
+//
+//                            },
+//                          ),
+//                        ),
+//
+//                      ),
+//
+
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: ListView.builder(
+                          itemCount: bankState.bank.length,
+                            itemBuilder: (BuildContext context, int index){
+                          return Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: bankWidget(name: bankState.bank.values.elementAt(index), codehh: bankState.bank.keys.elementAt(index)));
+
+                        }),
+                      ),
+                    ],
+                  ),
                 );
             },
 

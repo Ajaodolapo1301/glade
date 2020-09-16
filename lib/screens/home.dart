@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
 import 'package:glade/screens/list.dart';
+import 'package:glade/utils/CustomUtils.dart';
 import 'package:glade/view_models/bank.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 
@@ -15,10 +17,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home>  with AfterLayoutMixin<Home>{
+
+ProgressDialog pd;
+
+  void showPdDialog() async {
+    pd = await CustomUtils.showProgressDialog(
+        context, "Processing...Please wait!");
+  }
   var bvn;
   BankState bankState;
   @override
   Widget build(BuildContext context) {
+
+
+
+    pd = ProgressDialog(context);
+
     bankState = Provider.of<BankState>(context);
     return Scaffold(
 //      appBar: AppBar(
@@ -67,7 +81,8 @@ class _HomeState extends State<Home>  with AfterLayoutMixin<Home>{
 
               InkWell(
                 onTap: (){
-                      Navigator.push(context, FadeRoute(page: List()));
+                  getBvn();
+//                      Navigator.push(context, FadeRoute(page: List()));
                 },
                 child: Container(
                   margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
@@ -85,6 +100,15 @@ class _HomeState extends State<Home>  with AfterLayoutMixin<Home>{
         ),
       ),
     );
+  }
+
+
+  getBvn()async{
+    showPdDialog();
+    var result = await bankState.verifyBvn(bvn: bvn);
+    pd.hide();
+    print(result);
+
   }
 
   @override

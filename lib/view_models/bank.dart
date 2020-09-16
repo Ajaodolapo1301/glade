@@ -6,6 +6,7 @@ import 'package:glade/api/api.dart';
 abstract class ABankState {
   Future<Map<String,dynamic>> getListOfBanks();
   Future<Map<String,dynamic>> verifyAccount({String accountnum,  String bankCode});
+  Future<Map<String,dynamic>> verifyBvn({String bvn});
 }
 
 
@@ -60,6 +61,28 @@ class BankState extends ABankState with  ChangeNotifier{
     }
 
 
+    return result;
+  }
+
+
+
+
+  @override
+  Future<Map<String,dynamic >> verifyBvn({String bvn}) async {
+    Map<String, dynamic> result = Map();
+
+    try{
+      print(result);
+      result = await ListOfBanks().verifyBvn(bvn: bvn);
+
+      if(result['error'] == null){
+        result['error'] = true;
+
+      }
+
+    }catch(e){
+      print(e.toString());
+    }
     return result;
   }
 

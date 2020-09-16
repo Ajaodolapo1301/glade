@@ -2,8 +2,13 @@
 import 'dart:convert';
 
 
+import 'package:glade/model/user.dart';
 import 'package:http/http.dart' as http;
-const String Url = "https://api.glade.ng/resources";
+const String Url = "https://demo.api.gladepay.com/resources";
+
+
+
+
 abstract class AbstractApi{
   Future<Map<String,dynamic>> getListOfBanks();
   Future<Map<String,dynamic>> verifyAccount({String accountnum,  String bankCode});
@@ -21,8 +26,8 @@ class ListOfBanks with AbstractApi{
     Map<String, dynamic> result = {};
 
     var headers = {
-      "key" : "5YTmYrNylhPbv0xXhDg3sfmraSswa6VeeTU",
-      "mid" : "GP_Wp6K7hdiElziWcjebynYgsxQ2RY8qfhn",
+      "key" : "123456789",
+      "mid" : "GP0000001",
       'Content-Type': 'application/json'
     };
 
@@ -52,19 +57,27 @@ Map ma = jsonDecode(response.body);
   Future<Map<String,dynamic >> verifyBvn({String bvn}) async {
     Map<String, dynamic> result = {};
     var headers = {
-      "key" : "5YTmYrNylhPbv0xXhDg3sfmraSswa6VeeTU",
-      "mid" : "GP_Wp6K7hdiElziWcjebynYgsxQ2RY8qfhn",
+      "key" : "123456789",
+      "mid" : "GP0000001",
       'Content-Type': 'application/json'
     };
+
 
 
     try{
       var response = await http.put(Url, headers: headers, body: jsonEncode({"inquire": "bvn", "bvn": bvn}));
 
-      if(jsonDecode(response.body)["status"] == 101 || jsonDecode(response.body)["status"] == 101  ){
-        result['message'] = jsonDecode(response.body)["message"];
+      if(jsonDecode(response.body)["status"] == "error" || jsonDecode(response.body)["resolved"] == false ){
+        result['message'] = jsonDecode(response.body)["error"];
         result['error'] = true;
+      }else if(jsonDecode(response.body)["status"] == "success"){
+        var user = jsonDecode(response.body)["data"];
+        print(user);
+        var realUser =  User.fromJson(user);
+        result["user"] = realUser;
+        result['error'] = false;
       }
+
     }catch(e){
       print(e.toString());
     }
@@ -76,10 +89,11 @@ Map ma = jsonDecode(response.body);
   Future<Map<String, dynamic >> verifyAccount({String accountnum,  String bankCode}) async{
     Map<String, dynamic> result = {};
     var headers = {
-      "key" : "5YTmYrNylhPbv0xXhDg3sfmraSswa6VeeTU",
-      "mid" : "GP_Wp6K7hdiElziWcjebynYgsxQ2RY8qfhn",
+      "key" : "123456789",
+      "mid" : "GP0000001",
       'Content-Type': 'application/json'
     };
+
 
     try{
       var response = await http.put(Url, headers: headers, body: jsonEncode({"inquire": "accountname", "accountnumber": accountnum, "bankcode": bankCode}));
