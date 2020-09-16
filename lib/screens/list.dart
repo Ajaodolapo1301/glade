@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
 import 'package:glade/model/bank.dart';
@@ -23,6 +24,12 @@ BankState bankState;
   TextEditingController AccountName = new TextEditingController();
   String _errorText;
 AppState appState;
+var result;
+int charLength = 0;
+
+
+
+
   Bank _dropdownValue;
   @override
   Widget build(BuildContext context) {
@@ -107,13 +114,26 @@ AppState appState;
                     onTap: (){
 
                     },
+
+                    onChanged: (v){
+                      print(v);
+                      if(v.length == 10){
+                       get();
+                       print("oaoaoao");
+
+                      }
+                    },
+
                     autofocus: true,
                     keyboardType: TextInputType.number,
-                    validator: (value){
-                      if( !(value.length > 5 && value.isNotEmpty)){
-                        return "Account should contain more than 5 characters";
+                    inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(10)
+                    ],
+                    validator: (e) {
+                      if (e.length < 11) {
+                        return "enter a valid Account number";
                       }
-//                  bank  = value;
                       return null;
                     },
                     decoration: InputDecoration(
@@ -190,9 +210,15 @@ Spacer(),
 
 
 //
-  get(){
-    bankState.verifyAccount(accountnum: AccountNum.text, bankCode: code );
+  get() async{
 
+
+    print("called");
+    result = await bankState.verifyAccount(accountnum: AccountNum.text, bankCode: code );
+      setState(() {
+      AccountName.text =  result["name"];
+      });
+    print(AccountName.text);
   }
 
 
