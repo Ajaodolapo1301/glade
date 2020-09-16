@@ -22,13 +22,14 @@ class List extends StatefulWidget {
 class _ListState extends State<List> {
 var code;
 var bankName;
+var name;
 BankState bankState;
   TextEditingController bank = new TextEditingController();
   TextEditingController accountNum = new TextEditingController();
 
   TextEditingController accountName = new TextEditingController();
 AutoCompleteTextField searchTextField;
-GlobalKey<AutoCompleteTextFieldState<Bank>> key = new GlobalKey();
+GlobalKey<AutoCompleteTextFieldState<Map>> key = new GlobalKey();
 AppState appState;
 var result;
 int charLength = 0;
@@ -277,76 +278,15 @@ Spacer(),
                         color: Colors.white,
                         borderRadius: BorderRadius.only(topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0))
                     ),
-                  child: Column(
-                    children: <Widget>[
+                  child: ListView.builder(
+                    itemCount: bankState.bank.length,
+                      itemBuilder: (BuildContext context, int index){
+                      name = bankState.bank.values.elementAt(index);
+                    return Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: bankWidget(name: bankState.bank.values.elementAt(index), codehh: bankState.bank.keys.elementAt(index)));
 
-
-//                      Container(
-//                        margin: EdgeInsets.all(10),
-//                        width: 300,
-//                        height: 70,
-//                        color: Colors.grey,
-//                        child: Container(
-//                          margin: EdgeInsets.only(left: 20, right: 20),
-//                          child:
-//
-//                          searchTextField = AutoCompleteTextField<Bank>(
-//                            key: key,
-//                            clearOnSubmit: false,
-//                            suggestions:  bankState.bank
-//
-//                            style: TextStyle(color: Colors.black, fontSize: 16.0),
-//                            decoration: InputDecoration(
-//
-//                              enabledBorder: UnderlineInputBorder(
-//
-//                                borderSide: BorderSide(
-//                                    color: Color(0xffF2F2F2)
-//                                ),
-//                              ),
-//                              contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 20.0),
-//                              hintText: "Bank Name",
-//                              hintStyle: TextStyle(color: Colors.black, fontSize: 15,  ),
-//                            ),
-//                            itemFilter: (item, query) {
-//                              return item.name
-//                                  .toLowerCase()
-//                                  .startsWith(query.toLowerCase());
-//                            },
-//                            itemSorter: (a, b) {
-//                              return a.name.compareTo(b.name);
-//                            },
-//                            itemSubmitted: (item) {
-//                              setState(() {
-//                                searchTextField.textField.controller.text = item.name;
-//                              });
-//                            },
-//                            itemBuilder: (context, item) {
-//                              bankName = item.name;
-//                              print(bankName);
-//                              // ui for the autocomplete row
-//                              return row(item);
-//
-//                            },
-//                          ),
-//                        ),
-//
-//                      ),
-//
-
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        child: ListView.builder(
-                          itemCount: bankState.bank.length,
-                            itemBuilder: (BuildContext context, int index){
-                          return Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: bankWidget(name: bankState.bank.values.elementAt(index), codehh: bankState.bank.keys.elementAt(index)));
-
-                        }),
-                      ),
-                    ],
-                  ),
+                  }),
                 );
             },
 

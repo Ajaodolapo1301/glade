@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
+import 'package:glade/model/user.dart';
 import 'package:glade/screens/list.dart';
 import 'package:glade/utils/CustomUtils.dart';
 import 'package:glade/view_models/bank.dart';
@@ -18,7 +19,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home>  with AfterLayoutMixin<Home>{
-
+  final _formkey = GlobalKey<FormState>();
 ProgressDialog pd;
 
   void showPdDialog() async {
@@ -54,13 +55,18 @@ TextEditingController bvn = new TextEditingController();
 
                 Center(child: Text("Please input BVN to hekp us verify your account.if you cant remember, dial *565*0#", style: TextStyle(fontSize: 15),)),
  SizedBox(height: 20,),
-                Container(
+
+
+
+              Form(
+                key: _formkey,
+                child:   Container(
 
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(13),
+                      borderRadius: BorderRadius.circular(13),
                       border: Border.all(color:Colors.grey)),
                   child:TextFormField(
-                      controller: bvn,
+                    controller: bvn,
                     autofocus: true,
 
                     keyboardType: TextInputType.number,
@@ -70,7 +76,7 @@ TextEditingController bvn = new TextEditingController();
                     ],
                     validator: (value) {
                       if (value.length < 11) {
-                        return "enter a valid Account number";
+                        return "Enter a valid Bvn number";
                       }
 
 
@@ -83,14 +89,23 @@ TextEditingController bvn = new TextEditingController();
                   ),
 
 
-                ),],
+                ),
+              )
+
+
+
+
+
+                ,],
             ),
 
 
               InkWell(
                 onTap: (){
+                if(_formkey.currentState.validate()){
                   getBvn();
-//                      Navigator.push(context, FadeRoute(page: List()));
+                }
+
                 },
                 child: Container(
                   margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
@@ -118,13 +133,19 @@ TextEditingController bvn = new TextEditingController();
     pd.hide();
     if(result["error"] == false){
       setState(() {
-        CustomUtils.showCustomDialog(DialogType.success, context, "Hurray", "Next", (){
+        User user = result["user"];
+        CustomUtils.showCustomDialog(DialogType.success, context,"${user.firstname} ${user.lastname}, Congratulations, Your BVN has beem verified succesfully" , "Proceed", (){
           bvn.text = " ";
           Navigator.pop(context);
           Navigator.push(context, FadeRoute(page: List()));
         });
       });
+    }else if(result["error"] == true){
+      CustomUtils.showCustomDialog(DialogType.success, context,"Ops!, Verification failed, please Ensure you entered your Bvn correctly" , "Proceed", (){
+        bvn.text = " ";
+        Navigator.pop(context);
 
+      });
     }
 
 

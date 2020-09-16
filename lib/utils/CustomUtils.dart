@@ -131,7 +131,7 @@ class CustomUtils {
                           padding: EdgeInsets.all(10),
                           onPressed: onClose,
                           color: (type == DialogType.success)
-                              ? Color(0XFF009845)
+                              ? kprimary
                               :(type == DialogType.warning)?Colors.amber[700] : Colors.red,
                           child: Text(
                             actionText,
