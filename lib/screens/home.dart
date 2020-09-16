@@ -106,7 +106,20 @@ ProgressDialog pd;
   getBvn()async{
     showPdDialog();
     var result = await bankState.verifyBvn(bvn: bvn);
+
     pd.hide();
+    if(result["error"] == false){
+      setState(() {
+        CustomUtils.showCustomDialog(DialogType.success, context, "Hurray", "Next", (){
+          Navigator.pop(context);
+          Navigator.push(context, FadeRoute(page: List()));
+        });
+      });
+
+    }
+
+
+
     print(result);
 
   }
