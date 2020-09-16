@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
 import 'package:glade/model/bank.dart';
+import 'package:glade/utils/CustomUtils.dart';
 import 'package:glade/view_models/AppState.dart';
 import 'package:glade/view_models/bank.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 
@@ -26,15 +28,18 @@ BankState bankState;
 AppState appState;
 var result;
 int charLength = 0;
+ProgressDialog pd;
 
-
-
+void showDialog() async {
+  pd = await CustomUtils.showProgressDialog(
+      context, "Processing...Please wait!");
+}
 
   Bank _dropdownValue;
   @override
   Widget build(BuildContext context) {
     bankState = Provider.of<BankState>(context);
-
+  pd = ProgressDialog(context);
     appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
@@ -160,6 +165,8 @@ int charLength = 0;
                 child:      Container(
                   width: 300,
                   child: TextFormField(
+
+                    readOnly: true,
                     controller: AccountName,
                     onTap: (){
 
@@ -212,12 +219,15 @@ Spacer(),
 //
   get() async{
 
-
+    showDialog();
     print("called");
     result = await bankState.verifyAccount(accountnum: AccountNum.text, bankCode: code );
-      setState(() {
-      AccountName.text =  result["name"];
-      });
+    pd.hide();
+      if(result["error"] == false){
+        setState(() {
+          AccountName.text =  result["name"];
+        });
+      }
     print(AccountName.text);
   }
 
