@@ -6,7 +6,7 @@ import 'package:glade/model/bank.dart';
 
 abstract class ABankState {
   Future<Map<String,dynamic>> getListOfBanks();
-
+  Future<Map<String,dynamic>> verifyAccount({String accountnum,  String bankCode});
 }
 
 
@@ -43,6 +43,25 @@ class BankState extends ABankState with  ChangeNotifier{
     print(result);
     return result;
 
+  }
+
+  @override
+  Future<Map<String,dynamic>> verifyAccount({String accountnum, String bankCode})  async{
+    Map<String, dynamic> result = Map();
+    try{
+      result = await ListOfBanks().verifyAccount(accountnum: accountnum, bankCode: bankCode);
+      if(result['error'] == null){
+        result['error'] = true;
+        result['message'] = 'An Error occured, please try again';
+      }else{
+
+      }
+    }catch(e){
+      print(e.toString());
+    }
+
+
+    return result;
   }
 
 }

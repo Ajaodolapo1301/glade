@@ -15,7 +15,7 @@ class List extends StatefulWidget {
 }
 
 class _ListState extends State<List> {
-
+var code;
 BankState bankState;
   TextEditingController bank = new TextEditingController();
   TextEditingController AccountNum = new TextEditingController();
@@ -147,7 +147,7 @@ AppState appState;
                     autofocus: true,
                     keyboardType: TextInputType.number,
                     validator: (value){
-                      if( !(value.length > 5 && value.isNotEmpty)){
+                      if( !(value.length > 5 && value.isNotEmpty) ){
                         return "Account should contain more than 5 characters";
                       }
 //                  bank  = value;
@@ -189,6 +189,14 @@ Spacer(),
   }
 
 
+//
+  get(){
+    bankState.verifyAccount(accountnum: AccountNum.text, bankCode: code );
+
+  }
+
+
+
 
   showSheet(){
     showModalBottomSheet(context: context,
@@ -216,7 +224,7 @@ Spacer(),
                       itemBuilder: (BuildContext context, int index){
                     return Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: bankWidget(bankState.bank.values.elementAt(index)));
+                      child: bankWidget(name: bankState.bank.values.elementAt(index), codehh: bankState.bank.keys.elementAt(index)));
 
                   }),
                 );
@@ -227,13 +235,14 @@ Spacer(),
         });
   }
 
-  Widget bankWidget (name){
+  Widget bankWidget ({name, codehh}){
     return InkWell(
         onTap: (){
           setState(() {
             bank.text = name;
+            code = codehh;
           });
-          print(bank.text);
+          print(code);
           Navigator.pop(context);
         },
 
