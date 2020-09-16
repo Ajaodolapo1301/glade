@@ -126,7 +126,6 @@ void showDialog() async {
                         AccountName.text = "";
                       }else if(v.length == 10){
                         getName();
-
                       }
                     },
 
