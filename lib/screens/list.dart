@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
-import 'package:glade/model/bank.dart';
+
 import 'package:glade/utils/CustomUtils.dart';
 import 'package:glade/view_models/AppState.dart';
 import 'package:glade/view_models/bank.dart';
@@ -21,10 +21,10 @@ class _ListState extends State<List> {
 var code;
 BankState bankState;
   TextEditingController bank = new TextEditingController();
-  TextEditingController AccountNum = new TextEditingController();
+  TextEditingController accountNum = new TextEditingController();
 
-  TextEditingController AccountName = new TextEditingController();
-  String _errorText;
+  TextEditingController accountName = new TextEditingController();
+
 AppState appState;
 var result;
 int charLength = 0;
@@ -35,7 +35,7 @@ void showDialog() async {
       context, "Processing...Please wait!");
 }
 
-  Bank _dropdownValue;
+
   @override
   Widget build(BuildContext context) {
     bankState = Provider.of<BankState>(context);
@@ -43,6 +43,7 @@ void showDialog() async {
     appState = Provider.of<AppState>(context);
     return Scaffold(
       appBar: AppBar(
+        title: Text("Bank Details", style: TextStyle(color: Colors.black),),
         leading: IconButton(icon: Icon(Icons.arrow_back_ios, color: Colors.black,), onPressed: (){
           Navigator.pop(context);
         },),
@@ -54,8 +55,8 @@ void showDialog() async {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 5,),
-            Text("GET BANKS", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),
+
+
             SizedBox(height: 20,),
             Center(
               child: Container(
@@ -115,7 +116,7 @@ void showDialog() async {
                 child:      Container(
                   width: 300,
                   child: TextFormField(
-                    controller: AccountNum,
+                    controller: accountNum,
                     onTap: (){
 
                     },
@@ -123,7 +124,7 @@ void showDialog() async {
                     onChanged: (v){
                       print(v);
                       if(v.length < 10){
-                        AccountName.text = "";
+                        accountName.text = "";
                       }else if(v.length == 10){
                         getName();
                       }
@@ -167,7 +168,7 @@ void showDialog() async {
                   child: TextFormField(
 
                     readOnly: true,
-                    controller: AccountName,
+                    controller: accountName,
                     onTap: (){
 
                     },
@@ -221,14 +222,14 @@ Spacer(),
 
     showDialog();
     print("called");
-    result = await bankState.verifyAccount(accountnum: AccountNum.text, bankCode: code );
+    result = await bankState.verifyAccount(accountnum: accountNum.text, bankCode: code );
     pd.hide();
       if(result["error"] == false){
         setState(() {
-          AccountName.text =  result["name"];
+          accountName.text =  result["name"];
         });
       }
-    print(AccountName.text);
+    print(accountName.text);
   }
 
 

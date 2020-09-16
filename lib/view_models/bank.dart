@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:glade/api/api.dart';
-import 'package:glade/model/bank.dart';
 
 abstract class ABankState {
   Future<Map<String,dynamic>> getListOfBanks();
@@ -34,7 +33,7 @@ class BankState extends ABankState with  ChangeNotifier{
         result['message'] = 'An Error occured, please try again';
       }else if(result['error'] == false){
         bank = result['banks'];
-        print("get the fucking card $bank");
+
       }
 
     }catch(error){
@@ -53,8 +52,6 @@ class BankState extends ABankState with  ChangeNotifier{
       if(result['error'] == null){
         result['error'] = true;
         result['message'] = 'An Error occured, please try again';
-      }else{
-
       }
     }catch(e){
       print(e.toString());

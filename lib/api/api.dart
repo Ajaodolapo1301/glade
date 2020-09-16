@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:glade/model/bank.dart';
+
 import 'package:http/http.dart' as http;
 const String Url = "https://api.glade.ng/resources";
 abstract class AbstractApi{
@@ -20,8 +20,6 @@ class ListOfBanks with AbstractApi{
   Future<Map<String,dynamic >> getListOfBanks() async {
     Map<String, dynamic> result = {};
 
-
-
     var headers = {
       "key" : "5YTmYrNylhPbv0xXhDg3sfmraSswa6VeeTU",
       "mid" : "GP_Wp6K7hdiElziWcjebynYgsxQ2RY8qfhn",
@@ -33,8 +31,6 @@ class ListOfBanks with AbstractApi{
 
     try{
       var response = await http.put(Url, headers: headers, body: jsonEncode({"inquire": "banks"}));
-
-//      print(response.body);
       if(jsonDecode(response.body)["status"] == 101 || jsonDecode(response.body)["status"] == 103  ){
         result['message'] = jsonDecode(response.body)["message"];
         result['error'] = true;
@@ -108,5 +104,3 @@ Map ma = jsonDecode(response.body);
 
 }
 
-
-//{"inquire": "accountname", "accountnumber": "0040000009", "bankcode": "058"}
