@@ -122,9 +122,10 @@ void showDialog() async {
 
                     onChanged: (v){
                       print(v);
-                      if(v.length == 10){
-                       get();
-                       print("oaoaoao");
+                      if(v.length < 10){
+                        AccountName.text = "";
+                      }else if(v.length == 10){
+                        getName();
 
                       }
                     },
@@ -217,7 +218,7 @@ Spacer(),
 
 
 //
-  get() async{
+  getName() async{
 
     showDialog();
     print("called");
