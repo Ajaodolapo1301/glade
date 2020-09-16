@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
 import 'package:glade/screens/list.dart';
@@ -24,7 +25,7 @@ ProgressDialog pd;
     pd = await CustomUtils.showProgressDialog(
         context, "Processing...Please wait!");
   }
-  var bvn;
+TextEditingController bvn = new TextEditingController();
   BankState bankState;
   @override
   Widget build(BuildContext context) {
@@ -59,14 +60,21 @@ ProgressDialog pd;
                     borderRadius: BorderRadius.circular(13),
                       border: Border.all(color:Colors.grey)),
                   child:TextFormField(
-
+                      controller: bvn,
                     autofocus: true,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value){
-                      if( !(value.length > 5 && value.isNotEmpty)){
-                        return "password should contain more than 5 characters";
+
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(11)
+                    ],
+                    validator: (value) {
+                      if (value.length < 11) {
+                        return "enter a valid Account number";
                       }
-                      bvn  = value;
+
+
+
                       return null;
                     },
                     decoration: InputDecoration(
@@ -105,12 +113,13 @@ ProgressDialog pd;
 
   getBvn()async{
     showPdDialog();
-    var result = await bankState.verifyBvn(bvn: bvn);
+    var result = await bankState.verifyBvn(bvn: bvn.text);
 
     pd.hide();
     if(result["error"] == false){
       setState(() {
         CustomUtils.showCustomDialog(DialogType.success, context, "Hurray", "Next", (){
+          bvn.text = " ";
           Navigator.pop(context);
           Navigator.push(context, FadeRoute(page: List()));
         });
