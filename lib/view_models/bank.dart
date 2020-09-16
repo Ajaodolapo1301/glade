@@ -48,10 +48,12 @@ class BankState extends ABankState with  ChangeNotifier{
   Future<Map<String,dynamic>> verifyAccount({String accountnum, String bankCode})  async{
     Map<String, dynamic> result = Map();
     try{
+
+      print(result);
       result = await ListOfBanks().verifyAccount(accountnum: accountnum, bankCode: bankCode);
       if(result['error'] == null){
         result['error'] = true;
-        result['message'] = 'An Error occured, please try again';
+
       }
     }catch(e){
       print(e.toString());

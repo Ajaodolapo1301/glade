@@ -30,7 +30,7 @@ var result;
 int charLength = 0;
 ProgressDialog pd;
 
-void showDialog() async {
+void showPdDialog() async {
   pd = await CustomUtils.showProgressDialog(
       context, "Processing...Please wait!");
 }
@@ -125,7 +125,7 @@ void showDialog() async {
                       print(v);
                       if(v.length < 10){
                         accountName.text = "";
-                      }else if(v.length == 10){
+                      }else if(v.length == 10 && bank.text.isNotEmpty){
                         getName();
                       }
                     },
@@ -220,7 +220,7 @@ Spacer(),
 //
   getName() async{
 
-    showDialog();
+    showPdDialog();
     print("called");
     result = await bankState.verifyAccount(accountnum: accountNum.text, bankCode: code );
     pd.hide();
@@ -228,9 +228,13 @@ Spacer(),
         setState(() {
           accountName.text =  result["name"];
         });
+      }else{
+        redalert(message: result["message"]);
       }
     print(accountName.text);
   }
+
+
 
 
 
@@ -271,6 +275,76 @@ Spacer(),
           );
         });
   }
+
+
+  void redalert({String message}) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(25.0)
+            ),
+            child: Container(
+              height: 205,
+              width: 267,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+
+                      ],
+                    ),
+                    SizedBox(height: 25,),
+                    Center(
+                      child: Column(
+                        children: <Widget>[
+                          Text(message,
+                            style: TextStyle(fontSize: 15,
+                                fontWeight: FontWeight.bold),),
+                          SizedBox(height: 10,),
+
+                        ],
+                      ),
+
+
+                    ),
+                    SizedBox(height: 50,),
+                    Center(
+                      child: InkWell(
+                        onTap: () async {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 24,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            color: Color(0xffE53227),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(child: Text("Close",
+                            style: TextStyle(
+                                fontSize: 13, color: Colors.white),)),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
 
   Widget bankWidget ({name, codehh}){
     return InkWell(

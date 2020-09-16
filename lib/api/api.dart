@@ -84,9 +84,11 @@ Map ma = jsonDecode(response.body);
     try{
       var response = await http.put(Url, headers: headers, body: jsonEncode({"inquire": "accountname", "accountnumber": accountnum, "bankcode": bankCode}));
 
-      if(jsonDecode(response.body)["status"] == 101 || jsonDecode(response.body)["status"] == 101  ){
-        result['message'] = jsonDecode(response.body)["message"];
+      if(jsonDecode(response.body)["status"] == "error" || jsonDecode(response.body)["resolved"] == false  ){
+
+        result['message'] = jsonDecode(response.body)["error"];
         result['error'] = true;
+        print( result['message']);
       }else if(jsonDecode(response.body)["status"] == "success" && jsonDecode(response.body)["resolved"] == true){
         result['error'] = false;
         result["name"] = jsonDecode(response.body)["data"]["account_name"];
