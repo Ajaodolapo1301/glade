@@ -1,9 +1,9 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:glade/animation/fadeRoute.dart';
 import 'package:glade/constant.dart';
-import 'package:glade/model/bank.dart';
+
 import 'package:glade/screens/lastPage.dart';
 
 import 'package:glade/utils/CustomUtils.dart';

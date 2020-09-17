@@ -51,7 +51,7 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
                   ),
                   Center(
                       child: Text(
-                    "Please input BVN to hekp us verify your account.if you cant remember, dial *565*0#",
+                    "Please input BVN to help us verify your account.if you cant remember, dial *565*0#",
                     style: TextStyle(fontSize: 15),
                   )),
                   SizedBox(
@@ -138,7 +138,7 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
       });
     } else if (result["error"] == true) {
       CustomUtils.showCustomDialog(
-          DialogType.success,
+          DialogType.error,
           context,
           "Ops!, Verification failed, please Ensure you entered your Bvn correctly",
           "Proceed", () {
