@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:glade/screens/home.dart';
+import 'package:glade/view_models/bank.dart';
+import 'package:provider/provider.dart';
 
 
 class SplashPage extends StatefulWidget {
@@ -9,9 +12,9 @@ class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> with AfterLayoutMixin<SplashPage>{
 
-
+  BankState bankState;
 
 
 
@@ -26,6 +29,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    bankState = Provider.of<BankState>(context);
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -46,6 +50,11 @@ class _SplashPageState extends State<SplashPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    bankState.getListOfBanks();
   }
 }
 

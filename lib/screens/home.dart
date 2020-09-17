@@ -150,6 +150,6 @@ class _HomeState extends State<Home> with AfterLayoutMixin<Home> {
 
   @override
   void afterFirstLayout(BuildContext context) {
-    bankState.getListOfBanks();
+
   }
 }
