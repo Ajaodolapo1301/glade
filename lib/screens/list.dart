@@ -360,7 +360,7 @@ class _ListState extends State<List> {
             bank.text = name;
             code = bankCode;
           });
-          print(code);
+
           Navigator.pop(context);
         },
         child: Card(

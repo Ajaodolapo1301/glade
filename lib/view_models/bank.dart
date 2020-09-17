@@ -50,7 +50,7 @@ class BankState extends ABankState with  ChangeNotifier{
     Map<String, dynamic> result = Map();
     try{
 
-      print(result);
+
       result = await ListOfBanks().verifyAccount(accountnum: accountnum, bankCode: bankCode);
       if(result['error'] == null){
         result['error'] = true;
